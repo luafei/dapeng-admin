@@ -1,0 +1,76 @@
+.avue-crud {
+    .el-table {
+        border: 1px solid #E8EBF2;
+        border-bottom: none;
+    }
+}
+
+//dialog 弹框
+.avue-crud__dialog {
+    .el-dialog__header {
+        height: 50px;
+        line-height: 50px;
+        padding: 0 24px!important;
+        background-color: #F7F8FA;
+        .el-dialog__headerbtn {
+            top: 16px;
+        }
+    }
+    .el-dialog__body {
+        // padding: 25px 0 15px 0!important;
+        .avue-form {
+            .avue-form__group {
+                .avue-form__menu {
+                    padding: 15px 35px 20px 0;
+                    margin-top: 5px;
+                    border-top: 1px solid #EAECF1;
+                    .el-form-item {
+                        margin-bottom: 0;
+                        .el-button {
+                            margin: 0 10px;
+                        }
+                    }
+                }
+                // .avue-form__row{
+                //     padding-left: 35px!important;
+                // }
+                // .avue-form__row:nth-child(2n){
+                //     padding-left: 10px!important;
+                //     padding-right: 35px!important;
+                // }
+            }
+        }
+    }
+}
+
+//下拉框
+.el-select-dropdown {
+    .el-select-dropdown__list {
+        .el-select-dropdown__item.hover {
+            color: #FC652F;
+        }
+    }
+}
+
+//分页
+.avue-crud__pagination {
+    padding-top: 40px;
+    text-align: center;
+}
+
+// .avue-search {
+//     width: 453px!important;
+//     padding-left: 10px;
+//     .el-input__inner {
+//         border-radius: 2px;
+//         box-sizing: border-box;
+//         border: 1px solid #979797;
+//     }
+//     .el-input__suffix {
+//         right: 28px;
+//         .el-input__icon {
+//             font-size: 16px;
+//             color: #333754;
+//         }
+//     }
+// }
