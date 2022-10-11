@@ -238,6 +238,26 @@ class User extends VuexModule implements IUserState {
         this.SET_KID(data.id);
         this.SET_TOKEN(token);
         setToken(token)
+        const {
+          userRoles,
+          userName,
+          avatar,
+          introduction,
+          email,
+          mobileNum,
+          keyName
+        } = data;
+        this.SET_ROLES(userRoles);
+        this.SET_NAME(userName);
+        this.SET_AVATAR(avatar);
+        this.SET_INTRODUCTION(introduction);
+        this.SET_PHONE(mobileNum);
+        this.SET_KEY_NAME(keyName);
+        this.SET_EMAIL(email);
+        // Generate dynamic accessible routes based on roles
+        PermissionModule.GenerateRoutes(userRoles);
+        // Add generated routes
+        router.addRoutes(PermissionModule.dynamicRoutes);
         resolve(data)
       } catch (error) {
         reject(error)

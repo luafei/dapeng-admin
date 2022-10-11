@@ -287,7 +287,7 @@ export default class extends Vue {
     ],
   };
   created() {
-    console.log('user created', 11111)
+    console.log("user created", 11111);
     this.getList();
     this.getRoleList();
     this.debounced = (this as any)._.debounce(this.getList, 300);
@@ -342,68 +342,66 @@ export default class extends Vue {
   }
 
   private async handleSave(row: IuserData, done: any, loading: any) {
-    console.log('handleSave');
-    try {
-      let { userName, petName, keyName, mobileNum } = row;
-      let roleNameList = this._filterRoleNameList(this.role, this.roleList);
-      let curData = await getDSVSCert();
-      let cur = curData.data.serverCert;
-      let that = this;
-      const certId = localStorage.getItem("certID") || UserModule.certID;
-      console.log("UserModule.certID", UserModule.certID);
-      console.log("localStorage.getItem", localStorage.getItem("certID"));
+    console.log("handleSave");
+    let { userName, petName, keyName, mobileNum } = row;
+    let roleNameList = this._filterRoleNameList(this.role, this.roleList);
+    let curData = await getDSVSCert();
+    let cur = curData.data.serverCert;
+    let that = this;
+    const certId = localStorage.getItem("certID") || UserModule.certID;
+    console.log("UserModule.certID", UserModule.certID);
+    console.log("localStorage.getItem", localStorage.getItem("certID"));
 
-      console.log("handleSave init success");
-      WebsocketInterface.SOF_EncryptData(cur, mobileNum, async (res: any) => {
-        console.log("SOF_EncryptData UserModule.certID", certId);
-        if (certId) {
-          let postData = {
-            userName,
-            petName,
-            keyName,
-            mobileNum: res.retVal,
-            role: that.role.join(","),
-            roleName: roleNameList.join(","),
-          };
-          WebsocketInterface.SOF_SignData(
-            certId,
-            JSON.stringify(postData),
-            async (val: any) => {
-              console.log(val.retVal);
-              let params = {
-                ...postData,
-                clientCert: certId,
-                signValue: val.retVal,
-              };
-              await addUser(params);
-              that.getList();
-              that.$message({
-                message: "新增成功",
-                type: "success",
-              });
-            }
-          );
-        } else {
-          let postData = {
-            userName,
-            petName,
-            keyName,
-            mobileNum: res.retVal,
-            role: that.role.join(","),
-            roleName: roleNameList.join(","),
-          };
-          await addUser(postData);
-          that.getList();
-          that.$message({
-            message: "新增成功",
-            type: "success",
-          });
-        }
-      });
-    } catch (error) {
-      done();
-    }
+    console.log("handleSave init success");
+    WebsocketInterface.SOF_EncryptData(cur, mobileNum, async (res: any) => {
+      console.log("SOF_EncryptData UserModule.certID", certId);
+      if (certId) {
+        let postData = {
+          userName,
+          petName,
+          keyName,
+          mobileNum: res.retVal,
+          role: that.role.join(","),
+          roleName: roleNameList.join(","),
+        };
+        WebsocketInterface.SOF_SignData(
+          certId,
+          JSON.stringify(postData),
+          async (val: any) => {
+            console.log(val.retVal);
+            let params = {
+              ...postData,
+              clientCert: certId,
+              signValue: val.retVal,
+            };
+            await addUser(params);
+            that.getList();
+            that.$message({
+              message: "新增成功",
+              type: "success",
+            });
+          }
+        );
+      } else {
+        let postData = {
+          userName,
+          petName,
+          keyName,
+          mobileNum: res.retVal,
+          role: that.role.join(","),
+          roleName: roleNameList.join(","),
+        };
+        await addUser(postData);
+        that.getList();
+        that.$message({
+          message: "新增成功",
+          type: "success",
+        });
+      }
+    });
+    done();
   }
+
   private addInfo() {
     this.title = "新增用户";
     this.addDialog = true;
@@ -435,6 +433,7 @@ export default class extends Vue {
           petName,
           keyName,
           mobileNum: res.retVal,
+          id,
           role: that.role.join(","),
           roleName: roleNameList.join(","),
         };
@@ -449,6 +448,7 @@ export default class extends Vue {
               signValue: val.retVal,
             };
             await addUser(params);
+            done();
             that.getList();
             that.$message({
               message: "新增成功",
@@ -469,6 +469,7 @@ export default class extends Vue {
         };
         await addUser(postData);
         that.getList();
+        done();
         that.$message({
           message: "修改成功",
           type: "success",
